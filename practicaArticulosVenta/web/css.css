@@ -13,11 +13,11 @@ border: 1px solid black;
 [id ^="carrito_"] {
     display: inline-block;
     margin: 10px;
-
+    text-align: center;
     border: 3px solid #6600cc;
     border-radius: 4px;
     
-    background-color:  #EFA0EA;
+    
 }
 
 [class ^="carrito_"] img {
@@ -34,7 +34,11 @@ border: 1px solid black;
     margin: 10px;
     border: 3px, solid, blue;
     border-radius: 4px;
-    background-color: red;
+   
 }
 
 
+
+.productos *{
+    text-align: center;
+}
