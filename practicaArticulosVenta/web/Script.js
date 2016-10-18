@@ -2,18 +2,14 @@
 var total = 0;
 
 function anadeCarrito(articuloId) {
-    /*Falta:
-     * - Actualizar cantidades:
-     * - Actualizar precio: es necesario que se acceda al precio cada vez que se pulsa y se le sume
-     */
+    /*Diferenciar id entre los nodos*/
     var id = articuloId.id;
     var direccionNodo = "carrito_" + id;
 
-
-    /*Recoge los valores*/
+    /*Recoge los valores del nodo*/
     var nodo = document.getElementById(id);
     var rutaImagen = nodo.getElementsByTagName("img")[0].src;
-    var texto = nodo.getElementsByTagName("p")[0].firstChild.nodeValue;
+    var texto = nodo.getElementsByTagName("p")[1].firstChild.nodeValue;
     var precioTratado = separarPrecio(texto);
     this.total = this.total + parseInt(precioTratado);
 
@@ -23,7 +19,6 @@ function anadeCarrito(articuloId) {
     if (document.getElementById(direccionNodo) == null) {
 
         /*Creación de nodo*/
-
         var newNode = document.createElement("div");
         newNode.setAttribute("id", direccionNodo);
         newNode.setAttribute("class", "claseCarrito");
@@ -45,15 +40,12 @@ function anadeCarrito(articuloId) {
         var boton1 = document.createElement("button");
         var textoBoton1 = document.createTextNode("+");
         boton1.appendChild(textoBoton1);
-
         boton1.setAttribute("onclick", "sumarUnidad(this)");
 
         var boton2 = document.createElement("button");
         var textoBoton2 = document.createTextNode("-");
         boton2.appendChild(textoBoton2);
-
         boton2.setAttribute("onclick", "restaUnidad(this)");
-
 
         /* cantidad*/
         var cant = document.createElement("p");
@@ -71,6 +63,7 @@ function anadeCarrito(articuloId) {
         /*Insertar las compras*/
         document.getElementById("carrito").appendChild(newNode);
 
+        /*Botón borrar Carrito*/
         mostrarBorrar();
 
 
@@ -81,21 +74,19 @@ function anadeCarrito(articuloId) {
         cantInt++;
         document.getElementById(direccionNodo).setAttribute("cantidad", cantInt);
         actualizarCantidad(direccionNodo);
-        /*Actualizar el valor*/
 
     }
-
-//  this.total = this.total + (parseInt(precioTratado)*document.getElementById(direccionNodo).getAttribute("cantidad"));
+    
+    /*Actualizar el valor*/
     mostrarTotal(this.total);
-
-
 }
 
 
 function sumarUnidad(nodo) {
+    /*Sacar el padre*/
     var padre = nodo.parentNode.id;
-
-
+    
+    /*Aumentar cantidad en uno*/
     var cantidad = document.getElementById(padre).getAttribute("cantidad");
     var cantidadInt = parseInt(cantidad);
     cantidadInt++;
@@ -109,25 +100,27 @@ function sumarUnidad(nodo) {
 }
 
 function restaUnidad(nodo) {
+    /*Sacar el padre*/
     var padre = nodo.parentNode.id;
-
-
+    
+    /*Disminuir la cantidad*/
     var cantidad = document.getElementById(padre).getAttribute("cantidad");
     var cantidadInt = parseInt(cantidad);
-            var precio = document.getElementById(padre).getAttribute("precio")
-
-    if (cantidadInt <= 1) {
+    var precio = document.getElementById(padre).getAttribute("precio")
+    
+    /*Eliminar los nodos si se baja de la cantidad indicada*/
+    if (cantidadInt <=1) {
         document.getElementById("carrito").removeChild(document.getElementById(padre));
 
     } else {
         cantidadInt--;
         document.getElementById(padre).setAttribute("cantidad", cantidadInt.toString());
         actualizarCantidad(padre);
-}
-        /*Actualizar precio*/
-        this.total = this.total - parseInt(precio);
-        mostrarTotal(this.total);
-    
+    }
+    /*Actualizar precio*/
+    this.total = this.total - parseInt(precio);
+    mostrarTotal(this.total);
+
 }
 
 
@@ -153,14 +146,13 @@ function mostrarBorrar() {
     }
     /*Borrar Todo*/
     var botonBorrar = document.createElement("button");
-    var textoBorrar = document.createTextNode("Borrar todo");
+    var textoBorrar = document.createTextNode("Borrar carrito");
     botonBorrar.setAttribute("onclick", "borrarTodo()");
     botonBorrar.appendChild(textoBorrar);
     document.getElementById("borrar").appendChild(botonBorrar);
 }
 
 function mostrarTotal(total) {
-
     var nodo = document.getElementById("precioTotal");
     if (nodo.hasChildNodes() == true) {
         nodo.removeChild(nodo.firstChild);
